@@ -1,3 +1,6 @@
+# python3 -m try
+
+import sys
 import pygame
 
 class PygameGame(object):
@@ -48,37 +51,63 @@ class PygameGame(object):
         # set the title of the window
         pygame.display.set_caption(self.title)
 
+
+        
+
+
         # stores all the keys currently being held down
         self._keys = dict()
 
         # call game-specific initialization
         self.init()
         playing = True
-        while playing:
-            time = clock.tick(self.fps)
-            self.timerFired(time)
+
+        # COMMENTING THIS OUT TO TRY IMAGE BACKGROUND STUFF
+        # while playing:
+        #     time = clock.tick(self.fps)
+        #     self.timerFired(time)
+        #     for event in pygame.event.get():
+        #         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        #             self.mousePressed(*(event.pos))
+        #         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+        #             self.mouseReleased(*(event.pos))
+        #         elif (event.type == pygame.MOUSEMOTION and
+        #               event.buttons == (0, 0, 0)):
+        #             self.mouseMotion(*(event.pos))
+        #         elif (event.type == pygame.MOUSEMOTION and
+        #               event.buttons[0] == 1):
+        #             self.mouseDrag(*(event.pos))
+        #         elif event.type == pygame.KEYDOWN:
+        #             self._keys[event.key] = True
+        #             self.keyPressed(event.key, event.mod)
+        #         elif event.type == pygame.KEYUP:
+        #             self._keys[event.key] = False
+        #             self.keyReleased(event.key, event.mod)
+        #         elif event.type == pygame.QUIT:
+        #             playing = False
+        #     screen.fill(self.bgColor)
+        #     self.redrawAll(screen)
+        #     pygame.display.flip()
+        clock_tick_rate=20
+
+
+        dead=False
+
+        clock = pygame.time.Clock()
+        background_image = pygame.image.load("img.png").convert()
+        while(dead==False):
             for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    self.mousePressed(*(event.pos))
-                elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-                    self.mouseReleased(*(event.pos))
-                elif (event.type == pygame.MOUSEMOTION and
-                      event.buttons == (0, 0, 0)):
-                    self.mouseMotion(*(event.pos))
-                elif (event.type == pygame.MOUSEMOTION and
-                      event.buttons[0] == 1):
-                    self.mouseDrag(*(event.pos))
-                elif event.type == pygame.KEYDOWN:
-                    self._keys[event.key] = True
-                    self.keyPressed(event.key, event.mod)
-                elif event.type == pygame.KEYUP:
-                    self._keys[event.key] = False
-                    self.keyReleased(event.key, event.mod)
-                elif event.type == pygame.QUIT:
-                    playing = False
-            screen.fill(self.bgColor)
-            self.redrawAll(screen)
+                if event.type == pygame.QUIT:
+                    dead = True
+
+            screen.blit(background_image, [0, 0])
+
             pygame.display.flip()
+            clock.tick(clock_tick_rate)
+
+        # image as background
+        
+        screen.blit(background_image, [0, 0])
 
         pygame.quit()
 
