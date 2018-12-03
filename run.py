@@ -7,6 +7,7 @@ from math import hypot
 
 import pygame
 from pygame.locals import *
+from pygame import display,movie
 
 # Image data path
 IMG_DIR = os.path.join(os.path.abspath(__file__), "img")
@@ -31,6 +32,9 @@ NUM_GAME_SATES = 7
 NEXT_BUTTON_CENTER = (int(SCREEN_WIDTH/2), int(SCREEN_HEIGHT- 65))
 NEXT_BUTTON_RADIUS = 50
 
+PATH = os.getcwd()
+
+
 def distance(first,second):
     (x1,y1)=first
     (x2,y2)=second
@@ -44,7 +48,7 @@ def _load_next_img():
     CURRENT_GAME_STATE += 1
     if CURRENT_GAME_STATE > NUM_GAME_SATES:
         sys.exit(0)
-    img = pygame.image.load(f'/Users/dumble/Desktop/pygame_test/imgs/{CURRENT_GAME_STATE}.jpg')
+    img = pygame.image.load(os.path.join(PATH,'imgs',str(CURRENT_GAME_STATE)+".jpg"))
     DISPLAYSURF.blit(pygame.transform.scale(img, (SCREEN_WIDTH, SCREEN_HEIGHT)), (0, 0))
 
 
@@ -84,8 +88,15 @@ def main():
     pygame.display.set_caption('Game Demo!')
 
     # Set the first image
-    img = pygame.image.load(f'/Users/dumble/Desktop/pygame_test/imgs/{CURRENT_GAME_STATE}.jpg')
-    DISPLAYSURF.blit(pygame.transform.scale(img, (SCREEN_WIDTH, SCREEN_HEIGHT)), (0, 0))
+    clock = pygame.time.Clock()
+    movie = pygame.movie.Movie(os.path.join(PATH,'imgs','m1.mp4'))
+    movie_screen = pygame.Surface(movie.get_size()).convert()
+
+    FPS = 30
+
+
+    # img = pygame.image.load(os.path.join(PATH,'imgs',str(CURRENT_GAME_STATE)+".jpg"))
+    # DISPLAYSURF.blit(pygame.transform.scale(img, (SCREEN_WIDTH, SCREEN_HEIGHT)), (0, 0))
 
 
     # Main event loop
@@ -108,6 +119,9 @@ def main():
 
         # Draw the button to click
         # _draw_next_button(mouse_pos)
+
+        DISPLAYSURF.blit(movie_screen, 0, 0)
+        clock.tick(FPS)
 
         # Update the display based on current state after reading events
         pygame.display.update()
