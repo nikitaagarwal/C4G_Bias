@@ -85,6 +85,7 @@ OPTION3 = Rect(886,331,100,70)
 OPTION4 = Rect(1122,331,100,70)
 
 def update_screen_and_state(new_state):
+    global CURRENT_GAME_STATE
     img = pygame.image.load(os.path.join(PATH,'imgs',new_state))
     DISPLAYSURF.blit(pygame.transform.scale(img, (SCREEN_WIDTH, SCREEN_HEIGHT)), (0, 0))
     CURRENT_GAME_STATE = new_state
